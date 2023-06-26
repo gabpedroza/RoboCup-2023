@@ -225,10 +225,12 @@ while (1):
         continue  # if the problem is connected to some deep issues, it resets the "v" and tries again
     if 'good morning' in voz:  # trigger of the greeting
         enviar_arduino(b'G')
+        show_face("blink")
         while (ac.falar_palavra("Good morning") == 3):
             importlib.reload(ac)
     elif 'recognize' in voz:  # trigger to recognize word through camera
         enviar_arduino(b'O')
+        show_face("processing")
         while (1):
             letra = oc.reconhecer_letra()  # here it tries to receive an letter. if it goes wrong it returns "vishkk"
             if (letra != 2 and letra != 3):
@@ -241,10 +243,12 @@ while (1):
                 print("falhaComumLetra") # if it just didn't recognise any meaningful word, it simply tries again
     elif 'calculate' in voz:  # trigger to the math operation
         enviar_arduino(b'C')
+        show_face("e")
         while (ac.fazer_conta(voz) == 3):
             importlib.reload(ac)
     elif 'receipt' in voz:  # trigger to the first rebelious act, it doesn't read the medical receipt
         enviar_arduino(b'R')
+        show_face("litch")
         while (ac.falar_palavra("no thanks you do it yourself") == 3):
             importlib.reload(ac)
     elif 'angry' in voz:
