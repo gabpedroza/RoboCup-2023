@@ -15,7 +15,7 @@ Arduino codes:
 
 The "mariaFinal" is the main arduino code, its able to turn and control the: the LEDS, dc motors and the servomotors. Its follows direct commands from the "arquivo_completo_V5_braco".
 
-And finally the "mini" is the code for our secondary robot named Mini. in its essence , its in charge of controlling the dc motors , the LEDS and the servomotors within it.
+And finally the "mini" is the code for our secondary robot named Mini. In its essence , its in charge of controlling the dc motors , the LEDS and the servomotors within it.
 
 
 
