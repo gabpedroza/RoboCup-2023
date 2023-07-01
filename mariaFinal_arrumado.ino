@@ -161,6 +161,10 @@ void loop() {
       //recognize
       understand();
       track();
+      digitalWrite(13, 1);
+      delay(500);
+      digitalWrite(13, 0);
+      delay(500);
       normal();
     }else if(i == 'O' || i == 'C'){ //ocr or calculate
       //recognize
@@ -358,11 +362,15 @@ void track(){
   leftStop();
   int angulo = initial_angle;
   int lista[6]; int j = 0;
-  long int timee = 0;
-  while(millis() - timee <= 18000){
+  long int timee = millis();
+  //Serial.println("entrou");
+  int i = 12;
+  while(i != 255){
+    //Serial.print(".");
     if(Serial.available()){ 
       ++j;
-      int i = Serial.readString().toInt(); //here, we get our displacement from the PC
+      i = Serial.readString().toInt(); //here, we get our displacement from the PC
+      //Serial.println(i);
       if(abs(i-10)<=1) i = 10;//if the displacement is too small, we just ignore it
       lista[j] = -i+10; //since we cannot send negative numbers over serial, we have to convert the displacement to a proper scale
       /*
@@ -396,12 +404,12 @@ void track(){
     Serial.flush();//we flush it to be certain that the values read are always up-to-date 
   }
   head_motor.write(initial_angle);
+  delay(600);
   leftFowards();
   rightBackwards();
   delay(500);
   leftStop();
   rightStop();
-  Serial.println('t');
 }
 void normal(){
     for (int i = 0; i<=LED_COUNT; i++)
