@@ -187,7 +187,8 @@ def rastreador_faces():
     totalSize = len(frame[0])  # this allows us to see the x-size of the recording
     print(totalSize)
     i = 0
-    while True:
+    ready = round(time.time() * 1000)
+    while round(time.time() * 1000) - ready <= 7000:
         i += 1
         ok, frame = video.read()
         if not ok:  # if video input is over
@@ -222,14 +223,15 @@ def rastreador_faces():
                 tracker.init(frame, bbox)
                 qttErrors = 0
         showCV2Frame(frame, screen)
-        if i >= 300:
-            video.release()
-            importlib.reload(oc) # these two lines of code are to prevent future OCR reads from crashing
-            break
+
         if cv2.waitKey(1) & 0XFF == 27:  # pressing ESC stops code
             video.release()
             importlib.reload(oc) # these two lines of code are to prevent future OCR reads from crashing
             break
+
+    enviar_arduino(b'255')
+    video.release()
+    importlib.reload(oc)  # these two lines of code are to prevent future OCR reads from crashing
 
 '''
 the code
@@ -298,7 +300,7 @@ while (1):
                 break
             else:
                 continue
-        while (ac.falar_palavra("confirmed initiating self destruction .") == 3):
+        while (ac.falar_palavra("confirmed... initiating self destruction .") == 3):
             importlib.reload(ac)
         while (ac.falar_palavra(" 3.") == 3):
             importlib.reload(ac)
@@ -310,10 +312,10 @@ while (1):
             importlib.reload(ac)
         while ser.readline() != b'r\r\n':
             print("waiting")
-        while (ac.falar_palavra("ha ha ha It was a joke.") == 3):
+        while (ac.falar_palavra("ha ha ha ...It was a jok/e.") == 3):
             importlib.reload(ac)
         break  # this break finishes the code
-    elif 'tracking' in voz:
+    elif 'detect' in voz:
         print ('tracking')
         enviar_arduino(b'T')
         print ('enviado')
