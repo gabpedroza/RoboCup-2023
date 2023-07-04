@@ -31,7 +31,7 @@ def reconhecer_letra():
             print(bounds[0][1])  # tries to print the words within the image//
 
             print(bounds[0][2])  # attempts to print the percentage of certainty of what's written on the image//
-            if (bounds[0][2] <= 0.8 and not (bounds[0][1].upper() in ["PYTHON", "OCR", "RGB",
+            if (bounds[0][2] <= 0.8 or not (bounds[0][1].upper() in ["PYTHON", "OCR", "RGB",
                                                                       "ESTILO", "HELLO", "ROBOCUP"])):
                 print("error" + bounds[0][1])
                 return 2  # se a certeza for muito baixa, retorna erro
