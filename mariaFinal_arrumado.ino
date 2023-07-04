@@ -365,6 +365,7 @@ void track(){
   long int timee = millis();
   //Serial.println("entrou");
   int i = 12;
+  int posLed = 34;
   while(i != 255){
     //Serial.print(".");
     if(Serial.available()){ 
@@ -394,6 +395,11 @@ void track(){
         angulo += 1*(total-lista[maxx]-lista[minn])/2;
         if(angulo < 0) angulo = 0;
         else if(angulo > 180) angulo = 180;
+        for(byte k = 0; k <= LED_COUNT; ++k){
+          if(abs(k - map(angulo, 0, 180, 0, 66)) > 2) leds.setPixelColor(k, B);
+          else leds.setPixelColor(k-14, G);
+        }
+        leds.show();
         head_motor.write(angulo);
         digitalWrite(LED_BUILTIN, 1);
         j = 0; //of course, it is necessary to reset the index of the list after sending the angle
@@ -404,7 +410,6 @@ void track(){
     Serial.flush();//we flush it to be certain that the values read are always up-to-date 
   }
   head_motor.write(initial_angle);
-  delay(600);
   leftFowards();
   rightBackwards();
   delay(500);
